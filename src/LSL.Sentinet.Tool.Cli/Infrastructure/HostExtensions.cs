@@ -1,3 +1,4 @@
+using System.Reflection;
 using LSL.AbstractConsole.ServiceProvider;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,8 +31,15 @@ public static class HostExtensions
         catch (ArgumentOutOfRangeException)
         {
             // This is thrown when the cli project has not yet had Options or Handlers added yet
-            services.GetRequiredService<IConsole>().WriteLine("It looks like this project has not yet added any Options or Handlers for the CLI");
+            GetConsole().WriteLine("It looks like this project has not yet added any Options or Handlers for the CLI");
             return 1;
         }
+        catch (TargetInvocationException ex) when (ex.InnerException is InvalidOperationException ioe)
+        {
+            GetConsole().WriteLine($"Username and Password must be passed in or set via environment variables: {ioe.Message}");
+            return 2;
+        }        
+
+        IConsole GetConsole() => services.GetRequiredService<IConsole>();
     }
 }

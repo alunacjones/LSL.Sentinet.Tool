@@ -12,7 +12,7 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/LSL.Sentinet.Tool.Cli/bin/Debug/net6.0/LSL.Sentinet.Tool.Cli.dll",
             "args": [
-                "upgrade",
+                "configure",
                 "-f",
                 "asd.json"
             ],

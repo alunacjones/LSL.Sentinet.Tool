@@ -22,6 +22,7 @@
     <PackageReference Include="DotNetEnv" Version="3.1.1" />
     <PackageReference Include="LSL.AbstractConsole.ServiceProvider" Version="1.0.1" />
     <PackageReference Include="LSL.Tool.Logger" Version="1.0.1" />
+    <PackageReference Include="LSL.Scrutor.Extensions" Version="1.3.96" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
