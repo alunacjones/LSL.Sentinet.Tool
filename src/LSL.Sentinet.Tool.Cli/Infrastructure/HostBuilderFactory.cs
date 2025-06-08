@@ -15,25 +15,28 @@ public static class HostBuilderFactory
     /// <returns>The default host builder for the CLI</returns>
     public static IHostBuilder Create(string[] args)
     {
-        var inMemorySettings = new BaseConfiguration();
-
         var builder = Host.CreateDefaultBuilder()
             .ConfigureAppConfiguration(
-                c => c.AddInMemoryCollection(inMemorySettings)
+                c => c.AddCommandLine(args, new Dictionary<string, string>                    
+                    {
+                        { "--username", "Sentinet:Username" },
+                        { "--password", "Sentinet:Password" },
+                        { "--baseurl", "Sentinet:BaseUrl" }
+                    })
             );
 
         Env.TraversePath().Load();
 
-        builder.ConfigureServices(services =>
+        builder.ConfigureServices((hostContext, services) =>
         {
             var (isVerbose, filteredArguments) = ArgumentsPreprocessor.ProcessArguments(args);
 
             services
                 .Configure<CommandLineOptions>(c => c.Arguments = filteredArguments)
+                // TODO: ues the api client's version of this once published
+                .Configure<SentinetApiOptions>(c => hostContext.Configuration.GetSection("Sentinet").Bind(c))
                 .AddAbstractConsole()
                 .AddCommandLineParser(typeof(Program).Assembly)
-                .AddHandlerInterceptors()
-                .AddSingleton<IBaseConfiguration>(_ => inMemorySettings)
                 .AddCliLogging(isVerbose);
         });
 

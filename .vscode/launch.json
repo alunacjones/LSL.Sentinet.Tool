@@ -14,7 +14,12 @@
             "args": [
                 "configure",
                 "-f",
-                "asd.json"
+                "asd.json",
+                "--username",
+                "mofo",
+                // "--baseurl",
+                // "http://from-cli.com",
+                "--verbose"
             ],
             "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
