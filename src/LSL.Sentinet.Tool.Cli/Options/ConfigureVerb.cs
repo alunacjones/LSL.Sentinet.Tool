@@ -1,7 +1,7 @@
 namespace LSL.Sentinet.Tool.Cli.Options;
 
-[Verb("upgrade", HelpText = "Hallo!")]
-public class UpgradeVerb : BaseOptions
+[Verb("configure", HelpText = "Hallo!")]
+public class ConfigureVerb : BaseOptions
 {
     [Option('f', "file", HelpText = "Filename!", Required = true)]
     public string Filename { get; set; } = default!;
