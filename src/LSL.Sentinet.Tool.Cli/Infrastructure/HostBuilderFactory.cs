@@ -1,5 +1,6 @@
 using DotNetEnv;
 using LSL.AbstractConsole.ServiceProvider;
+using LSL.Sentinet.ApiClient.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

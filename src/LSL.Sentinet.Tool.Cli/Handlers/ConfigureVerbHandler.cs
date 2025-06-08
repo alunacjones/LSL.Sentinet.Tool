@@ -1,4 +1,5 @@
 using System.Text.Json;
+using LSL.Sentinet.ApiClient.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 namespace LSL.Sentinet.Tool.Cli.Handlers;
