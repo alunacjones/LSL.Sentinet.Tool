@@ -366,3 +366,6 @@ FodyWeavers.xsd
 
 # env files
 .env
+
+# test data
+*.local.json

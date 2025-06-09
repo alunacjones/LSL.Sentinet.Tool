@@ -15,8 +15,8 @@
                 "configure",
                 "-f",
                 "asd.json",
-                "--username",
-                "mofo",
+                // "--username",
+                // "mofo",
                 // "--baseurl",
                 // "http://from-cli.com",
                 "--verbose"

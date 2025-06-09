@@ -24,6 +24,7 @@
     <PackageReference Include="LSL.Tool.Logger" Version="1.0.1" />
     <PackageReference Include="LSL.Sentinet.ApiClient" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\readme.md" Pack="true" PackagePath=""/>

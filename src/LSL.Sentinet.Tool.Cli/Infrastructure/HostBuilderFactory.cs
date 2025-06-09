@@ -18,7 +18,7 @@ public static class HostBuilderFactory
     {
         var builder = Host.CreateDefaultBuilder()
             .ConfigureAppConfiguration(
-                c => c.AddCommandLine(args, new Dictionary<string, string>                    
+                c => c.AddCommandLine(args, new Dictionary<string, string>
                     {
                         { "--username", "Sentinet:Username" },
                         { "--password", "Sentinet:Password" },
@@ -34,8 +34,12 @@ public static class HostBuilderFactory
 
             services
                 .Configure<CommandLineOptions>(c => c.Arguments = filteredArguments)
-                // TODO: ues the api client's version of this once published
-                .Configure<SentinetApiOptions>(c => hostContext.Configuration.GetSection("Sentinet").Bind(c))
+                .AddSentinetApiClient(
+                    c => hostContext.Configuration.GetSection("Sentinet").Bind(c),
+                    httpClientBuilderConfigurator: h => h.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                    {
+                        ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+                    }))
                 .AddAbstractConsole()
                 .AddCommandLineParser(typeof(Program).Assembly)
                 .AddCliLogging(isVerbose);
