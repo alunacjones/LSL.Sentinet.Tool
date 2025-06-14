@@ -34,12 +34,16 @@ public static class HostBuilderFactory
 
             services
                 .Configure<CommandLineOptions>(c => c.Arguments = filteredArguments)
+                .AddScoped<ObfuscatingLogger>()
                 .AddSentinetApiClient(
                     c => hostContext.Configuration.GetSection("Sentinet").Bind(c),
-                    httpClientBuilderConfigurator: h => h.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-                    {
-                        ServerCertificateCustomValidationCallback = (_, _, _, _) => true
-                    }))
+                        httpClientBuilderConfigurator: h => h.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+                        {
+                            ServerCertificateCustomValidationCallback = (_, _, _, _) => true
+                        })
+                        .RemoveAllLoggers()
+                        .AddLogger<ObfuscatingLogger>()
+                )
                 .AddAbstractConsole()
                 .AddCommandLineParser(typeof(Program).Assembly)
                 .AddCliLogging(isVerbose);

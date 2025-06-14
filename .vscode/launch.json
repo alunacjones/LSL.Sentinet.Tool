@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/LSL.Sentinet.Tool.Cli/bin/Debug/net6.0/LSL.Sentinet.Tool.Cli.dll",
+            "program": "${workspaceFolder}/src/LSL.Sentinet.Tool.Cli/bin/Debug/net8.0/LSL.Sentinet.Tool.Cli.dll",
             "args": [
                 "configure",
                 "-f",
