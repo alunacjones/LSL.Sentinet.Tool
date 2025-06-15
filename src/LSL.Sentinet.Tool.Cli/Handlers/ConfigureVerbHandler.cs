@@ -33,7 +33,7 @@ public class ConfigureVerbHandler : IAsyncHandler<ConfigureVerb>
         await File.WriteAllTextAsync("output.local.json", JsonSerializer.Serialize(folder, jsonOptions));
         var svc = await _foldersFacade.Client.GetServiceAsync(folder.SubTree.Services.OrderBy(s => s.Name.Length).First().Id);
         var service = await _foldersFacade.Client.GetServiceVersionAsync(svc.ServiceVersions.First().ServiceVersionId);
-        await File.WriteAllTextAsync("output2.local.json", JsonSerializer.Serialize(svc, jsonOptions));
+        await File.WriteAllTextAsync("output2.local.json", JsonSerializer.Serialize(new { svc, service }, jsonOptions));
 
         return 0;
     }
