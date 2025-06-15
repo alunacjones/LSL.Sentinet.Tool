@@ -46,7 +46,7 @@ public class DefaultHandlingTests : BaseCliTest
         output.Should().NotContain("--verbose");
     }
 
-    [TestCase(new string[] { "test", "--verbose" }, 
+    [TestCase(new string[] { "test", "--verbose" },
         """
         a message with more
         and again
@@ -58,13 +58,13 @@ public class DefaultHandlingTests : BaseCliTest
 
         """)
     ]
-    [TestCase(new string[] { "test" }, 
+    [TestCase(new string[] { "test" },
         """
         a message with more
         and again
 
         """)
-    ]    
+    ]
     public async Task GivenACallWithATestVerb_ItShouldOutputTheTheExpectedResult(string[] args, string expectedOutput)
     {
         // Arrange
@@ -84,7 +84,7 @@ public class DefaultHandlingTests : BaseCliTest
 
         result.Should().Be(0);
         output.Should().Be(expectedOutput.ReplaceLineEndings());
-    }    
+    }
 
     [Test]
     public async Task GivenACallThatThrows_ItShouldOutputTheTheExpectedResult()
@@ -137,5 +137,5 @@ public class DefaultHandlingTests : BaseCliTest
 
             return Task.FromResult(0);
         }
-    }    
+    }
 }

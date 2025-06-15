@@ -14,7 +14,9 @@
             "args": [
                 "configure",
                 "-f",
-                "asd.json",
+                "examples/test-data.yaml",
+                "--variables",
+                "env=UAT;value=123;another=ads ewq",
                 // "--username",
                 // "mofo",
                 // "--baseurl",

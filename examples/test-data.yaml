@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=./schema.json
+Commands:
+  - commands.js
+Variables:
+  - Name: name
+    Value: xyz
+  - Name: another
+    Value: $(env)
+  - Name: version
+    Value: 12
+  # - Import: asd
+  # - Import: asd
+  - Name: asd
+    Value: dsa
+Name: Als-$(env)-$(name)-$(another:trailingSlash)-$(SENTINET_TOOL_STUFF)
+Version: 12
+Services:
+  Physical:
+    - Name: Blah

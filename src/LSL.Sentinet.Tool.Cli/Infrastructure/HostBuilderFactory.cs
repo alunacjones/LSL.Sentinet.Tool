@@ -1,9 +1,13 @@
 using DotNetEnv;
 using LSL.AbstractConsole.ServiceProvider;
+using LSL.Evaluation.Jint;
 using LSL.Sentinet.ApiClient.DependencyInjection;
+using LSL.Sentinet.Tool.Cli.Configuration;
+using LSL.VariableReplacer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using YamlDotNet.Serialization;
 
 namespace LSL.Sentinet.Tool.Cli.Infrastructure;
 
@@ -35,6 +39,17 @@ public static class HostBuilderFactory
             services
                 .Configure<CommandLineOptions>(c => c.Arguments = filteredArguments)
                 .AddScoped<ObfuscatingLogger>()
+                .AddSingleton(_ => new VariableReplacerFactory()
+                    .Build(c => c.AddEnvironmentVariables(
+                            e => e.WithEnvironmentVariableFilter(v => v.StartsWith("SENTINET_TOOL_")).WithPrefix(string.Empty)
+                        )
+                    )
+                )
+                .AddScoped(_ => new JintEvaluatorFactory())
+                .AddScoped<IConfigurationFileLoader, ConfigurationFileLoader>()
+                .AddScoped<IVariablesLoader, VariablesLoader>()
+                .AddScoped(_ => new DeserializerBuilder().IgnoreUnmatchedProperties())
+                .AddScoped(_ => new DeserializerBuilder().IgnoreUnmatchedProperties().Build())
                 .AddSentinetApiClient(
                     c => hostContext.Configuration.GetSection("Sentinet").Bind(c),
                         httpClientBuilderConfigurator: h => h.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler

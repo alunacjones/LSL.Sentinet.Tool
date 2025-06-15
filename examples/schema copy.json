@@ -1,0 +1,15 @@
+{
+    "$schema": "./schema.json",
+    "Variables": [
+        {
+            "Import": "ads"
+        },
+        {
+            "Name": "asd",
+            "Value": "ewq"
+        },
+        {
+            "Import": "ads"            
+        }
+    ]
+}

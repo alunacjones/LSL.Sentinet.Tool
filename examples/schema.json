@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "ConfigurationFile",
+    "type": "object",
+    "properties": {
+        "Variables": {
+            "$ref": "#/definitions/VariableItem"
+        },
+        "Name": {
+            "type": "string"
+        },
+        "Version": {
+            "type": "integer",
+            "format": "int32"
+        }
+    },
+    "definitions": {
+        "VariableItem": {
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "$ref": "#/definitions/NameValue"
+                    },
+                    {
+                        "$ref": "#/definitions/Import"
+                    }
+                ]
+            }
+        },
+        "Import": {
+            "type": "object",
+            "properties": {
+                "Import": {
+                    "type": "string"
+                }
+            },
+            "required": ["Import"],
+            "additionalProperties": false
+        },
+        "NameValue": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "Value": {
+                    "type": [
+                        "string",
+                        "integer",
+                        "number"
+                    ]
+                }
+            },
+            "required": ["Name", "Value"],
+            "additionalProperties": false
+        }
+    }
+}
