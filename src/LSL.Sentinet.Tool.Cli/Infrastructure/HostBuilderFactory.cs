@@ -47,8 +47,8 @@ public static class HostBuilderFactory
                 )
                 .AddScoped(_ => new JintEvaluatorFactory())
                 .AddScoped<IConfigurationFileLoader, ConfigurationFileLoader>()
+                .AddScoped<ICommandEvaluatorFactory, CommandEvaluatorFactory>()
                 .AddScoped<IVariablesLoader, VariablesLoader>()
-                .AddScoped(_ => new DeserializerBuilder().IgnoreUnmatchedProperties())
                 .AddScoped(_ => new DeserializerBuilder().IgnoreUnmatchedProperties().Build())
                 .AddSentinetApiClient(
                     c => hostContext.Configuration.GetSection("Sentinet").Bind(c),

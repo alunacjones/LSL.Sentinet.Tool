@@ -12,7 +12,7 @@ Variables:
   # - Import: asd
   - Name: asd
     Value: dsa
-Name: Als-$(env)-$(name)-$(another:trailingSlash)-$(SENTINET_TOOL_STUFF)
+Name: Als-$(env)-$(name)-$(another:trailingSlash)-$(SENTINET_TOOL_STUFF:bold)
 Version: 12
 Services:
   Physical:
