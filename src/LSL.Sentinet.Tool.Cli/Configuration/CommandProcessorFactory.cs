@@ -5,9 +5,9 @@ using YamlDotNet.Serialization;
 
 namespace LSL.Sentinet.Tool.Cli.Configuration;
 
-public class CommandEvaluatorFactory(IDeserializer deserializer, JintEvaluatorFactory jintEvaluatorFactory) : ICommandEvaluatorFactory
+public class CommandProcessorFactory(IDeserializer deserializer, JintEvaluatorFactory jintEvaluatorFactory) : ICommandProcessorFactory
 {
-    public async Task<CommandProcessingDelegate> BuildEvaluator(string filePath)
+    public async Task<CommandProcessingDelegate> BuildProcessor(string filePath)
     {
         using var commandReader = new StreamReader(filePath);
 

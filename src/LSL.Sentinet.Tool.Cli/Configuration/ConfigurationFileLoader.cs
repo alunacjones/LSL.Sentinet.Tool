@@ -7,16 +7,16 @@ public class ConfigurationFileLoader(
     IVariableReplacer variableReplacer,
     IVariablesLoader variablesLoader,
     IDeserializer deserializer,
-    ICommandEvaluatorFactory commandEvaluatorFactory) : IConfigurationFileLoader
+    ICommandProcessorFactory commandProcessorFactory) : IConfigurationFileLoader
 {
     /// <inheritdoc/>
     public async Task<ConfigurationFile> LoadAsync(string filePath, IEnumerable<string> variables)
     {
-        var commandEvaluator = await commandEvaluatorFactory.BuildEvaluator(filePath);
+        var commandProcessor = await commandProcessorFactory.BuildProcessor(filePath);
 
         var replacer = variableReplacer.CloneAndConfigure(c => c
             .AddPassedInVariables(variables)
-            .WithDefaultTransformer(commandProcessor: commandEvaluator)
+            .WithDefaultTransformer(commandProcessor: commandProcessor)
         );
 
         var importedVariables = await variablesLoader.LoadAsync(filePath, replacer);
