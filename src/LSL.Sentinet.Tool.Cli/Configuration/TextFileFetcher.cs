@@ -3,13 +3,14 @@ namespace LSL.Sentinet.Tool.Cli.Configuration;
 
 public class TextFileFetcher(string basePath, HttpClient httpClient) : ITextFileFetcher
 {
-    public async Task<string> FetchFile(string path)
+    public async Task<Stream> FetchStream(string path)
     {
-        if (Uri.TryCreate(path, UriKind.Absolute, out var uri))
+        if (Uri.TryCreate(path, UriKind.Absolute, out var uri) && uri.Scheme is not "file")
         {
-            return await httpClient.GetStringAsync(uri.ToString());
+            var response = await httpClient.GetAsync(uri.ToString());
+            return response.Content.ReadAsStream();
         }
 
-        return await File.ReadAllTextAsync(Path.Combine(basePath, path));
+        return File.OpenRead(Path.Combine(basePath, path));
     }
 }

@@ -17,7 +17,7 @@ public class ConfigureVerbHandler(
     public async Task<int> ExecuteAsync(ConfigureVerb options)
     {
         var file = options.Filename;
-        var configuration = await configurationFileLoader.LoadAsync(options.Filename, options.Variables);
+        var configuration = await configurationFileLoader.LoadAsync(Path.GetFullPath(options.Filename), options.Variables);
 
         return 0;
         var folder = await foldersFacade.GetFolderAsync(Environment.GetEnvironmentVariable("SENTINET_TEST_PATH"));

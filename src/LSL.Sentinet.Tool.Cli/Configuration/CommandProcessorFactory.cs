@@ -20,7 +20,7 @@ public class CommandProcessorFactory(
 
         foreach (var commandFile in commands.CommandFiles)
         {
-            commandsCode.Add(await textFileFetcher.FetchFile(commandFile));
+            commandsCode.Add(await textFileFetcher.FetchText(commandFile));
         }
 
         var evaluator = jintEvaluatorFactory.Build(c => commandsCode.ForEach(c.AddCode));
