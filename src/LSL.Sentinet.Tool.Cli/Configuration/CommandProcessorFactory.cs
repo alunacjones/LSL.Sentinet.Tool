@@ -8,34 +8,23 @@ namespace LSL.Sentinet.Tool.Cli.Configuration;
 public class CommandProcessorFactory(
     IDeserializer deserializer,
     JintEvaluatorFactory jintEvaluatorFactory,
-    HttpClient httpClient) : ICommandProcessorFactory
+    ITextFileFetcherFactory textFileFetcherFactory) : ICommandProcessorFactory
 {
     public async Task<CommandProcessingDelegate> BuildProcessor(string filePath)
     {
         using var commandReader = new StreamReader(filePath);
 
+        var textFileFetcher = textFileFetcherFactory.Build(Path.GetDirectoryName(filePath)!);
         var commands = deserializer.Deserialize<CommandsContainer>(commandReader);
-        var basePath = Path.GetDirectoryName(filePath)!;
-
         var commandsCode = new List<string>();
 
-        foreach (var command in commands.Commands)
+        foreach (var commandFile in commands.CommandFiles)
         {
-            commandsCode.Add(await FetchFile(command, basePath));
+            commandsCode.Add(await textFileFetcher.FetchFile(commandFile));
         }
 
         var evaluator = jintEvaluatorFactory.Build(c => commandsCode.ForEach(c.AddCode));
 
         return (command, value) => evaluator.Evaluate($"{command}({JsonConvert.SerializeObject(value)})").ToString();
-    }
-
-    public async Task<string> FetchFile(string filePath, string baseFolder)
-    {
-        if (Uri.TryCreate(filePath, UriKind.Absolute, out var uri))
-        {
-            return await httpClient.GetStringAsync(uri.ToString());
-        }
-
-        return await File.ReadAllTextAsync(Path.Combine(baseFolder, filePath));
     }
 }

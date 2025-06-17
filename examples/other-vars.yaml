@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=./schema.json#/definitions/VarsOnly
+Variables:
+  - Name: name
+    Value: xyz
+  - Name: another
+    Value: $(env) $(version) yay
+  - Name: version
+    Value: 12
+  - Name: asd
+    Value: dsa

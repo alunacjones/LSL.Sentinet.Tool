@@ -46,6 +46,7 @@ public static class HostBuilderFactory
                         ))
                 )
                 .AddHttpClient()
+                .AddAutoFactory<ITextFileFetcherFactory>(c => c.AddConcreteType<ITextFileFetcher, TextFileFetcher>())
                 .AddScoped(_ => new JintEvaluatorFactory())
                 .AddScoped<IConfigurationFileLoader, ConfigurationFileLoader>()
                 .AddScoped<ICommandProcessorFactory, CommandProcessorFactory>()

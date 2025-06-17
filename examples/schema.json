@@ -15,6 +15,14 @@
         }
     },
     "definitions": {
+        "VarsOnly": {
+            "type": "object",
+            "properties": {
+                "Variables": {
+                    "$ref": "#/definitions/VariableItem"
+                }
+            }
+        },
         "VariableItem": {
             "type": "array",
             "items": {
