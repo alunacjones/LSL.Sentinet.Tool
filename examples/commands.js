@@ -7,5 +7,5 @@ function trailingSlash(value) {
 }
 
 function bold(value) {
-    return `**${value}**`
+    return `**!${value}!**`
 }

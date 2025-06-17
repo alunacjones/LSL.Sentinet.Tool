@@ -5,7 +5,10 @@ using YamlDotNet.Serialization;
 
 namespace LSL.Sentinet.Tool.Cli.Configuration;
 
-public class CommandProcessorFactory(IDeserializer deserializer, JintEvaluatorFactory jintEvaluatorFactory) : ICommandProcessorFactory
+public class CommandProcessorFactory(
+    IDeserializer deserializer,
+    JintEvaluatorFactory jintEvaluatorFactory,
+    HttpClient httpClient) : ICommandProcessorFactory
 {
     public async Task<CommandProcessingDelegate> BuildProcessor(string filePath)
     {
@@ -18,11 +21,21 @@ public class CommandProcessorFactory(IDeserializer deserializer, JintEvaluatorFa
 
         foreach (var command in commands.Commands)
         {
-            commandsCode.Add(await File.ReadAllTextAsync(Path.Combine(basePath, command)));
+            commandsCode.Add(await FetchFile(command, basePath));
         }
 
         var evaluator = jintEvaluatorFactory.Build(c => commandsCode.ForEach(c.AddCode));
 
         return (command, value) => evaluator.Evaluate($"{command}({JsonConvert.SerializeObject(value)})").ToString();
+    }
+
+    public async Task<string> FetchFile(string filePath, string baseFolder)
+    {
+        if (Uri.TryCreate(filePath, UriKind.Absolute, out var uri))
+        {
+            return await httpClient.GetStringAsync(uri.ToString());
+        }
+
+        return await File.ReadAllTextAsync(Path.Combine(baseFolder, filePath));
     }
 }

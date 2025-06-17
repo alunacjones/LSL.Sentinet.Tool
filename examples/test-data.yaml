@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./schema.json
 Commands:
-  - commands.js
+  - https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/commands.js
 Variables:
   - Name: name
     Value: xyz

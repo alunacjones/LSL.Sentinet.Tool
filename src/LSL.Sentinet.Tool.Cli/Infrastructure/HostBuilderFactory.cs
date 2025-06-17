@@ -45,6 +45,7 @@ public static class HostBuilderFactory
                             e => e.WithEnvironmentVariableFilter(v => v.StartsWith("SENTINET_TOOL_")).WithPrefix(string.Empty)
                         ))
                 )
+                .AddHttpClient()
                 .AddScoped(_ => new JintEvaluatorFactory())
                 .AddScoped<IConfigurationFileLoader, ConfigurationFileLoader>()
                 .AddScoped<ICommandProcessorFactory, CommandProcessorFactory>()
