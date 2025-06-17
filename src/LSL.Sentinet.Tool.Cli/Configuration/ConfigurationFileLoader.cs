@@ -13,15 +13,13 @@ public class ConfigurationFileLoader(
     public async Task<ConfigurationFile> LoadAsync(string filePath, IEnumerable<string> variables)
     {
         var commandProcessor = await commandProcessorFactory.BuildProcessor(filePath);
+        var importedVariables = await variablesLoader.LoadAsync(filePath);
 
         var replacer = variableReplacer.CloneAndConfigure(c => c
             .AddPassedInVariables(variables)
             .WithDefaultTransformer(commandProcessor: commandProcessor)
-        );
-
-        var importedVariables = await variablesLoader.LoadAsync(filePath, replacer);
-
-        replacer = replacer.CloneAndConfigure(c => c.AddVariables(importedVariables));
+            .AddVariables(importedVariables)
+            .ThrowIfVariableNotFound());
 
         using var reader = new StreamReader(filePath);
 

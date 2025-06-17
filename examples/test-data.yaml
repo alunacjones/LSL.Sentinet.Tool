@@ -5,7 +5,7 @@ Variables:
   - Name: name
     Value: xyz
   - Name: another
-    Value: $(env)
+    Value: $(env) $(version) yay
   - Name: version
     Value: 12
   # - Import: asd

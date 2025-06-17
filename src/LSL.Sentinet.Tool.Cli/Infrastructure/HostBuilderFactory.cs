@@ -40,10 +40,10 @@ public static class HostBuilderFactory
                 .Configure<CommandLineOptions>(c => c.Arguments = filteredArguments)
                 .AddScoped<ObfuscatingLogger>()
                 .AddSingleton(_ => new VariableReplacerFactory()
-                    .Build(c => c.AddEnvironmentVariables(
+                    .Build(c => c
+                        .AddEnvironmentVariables(
                             e => e.WithEnvironmentVariableFilter(v => v.StartsWith("SENTINET_TOOL_")).WithPrefix(string.Empty)
-                        )
-                    )
+                        ))
                 )
                 .AddScoped(_ => new JintEvaluatorFactory())
                 .AddScoped<IConfigurationFileLoader, ConfigurationFileLoader>()
