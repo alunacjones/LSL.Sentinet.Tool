@@ -38,6 +38,7 @@ public static class HostBuilderFactory
 
             services
                 .Configure<CommandLineOptions>(c => c.Arguments = filteredArguments)
+                .AddTransient<FileSchemeMessageHandler>()
                 .AddScoped<ObfuscatingLogger>()
                 .AddSingleton(_ => new VariableReplacerFactory()
                     .Build(c => c
@@ -46,6 +47,7 @@ public static class HostBuilderFactory
                         ))
                 )
                 .AddHttpClient()
+                .ConfigureHttpClientDefaults(c => c.AddHttpMessageHandler<FileSchemeMessageHandler>())
                 .AddAutoFactory<ITextFileFetcherFactory>(c => c.AddConcreteType<ITextFileFetcher, TextFileFetcher>())
                 .AddScoped(_ => new JintEvaluatorFactory())
                 .AddScoped<IConfigurationFileLoader, ConfigurationFileLoader>()

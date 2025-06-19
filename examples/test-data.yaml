@@ -3,6 +3,7 @@ CommandFiles:
   - https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/commands.js
 Variables:
   - Import: https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/other-vars.yaml
+  - Import: ./other-vars.yaml
   - Name: name
     Value: Buddy
 Name: Als-$(env)-$(name)-$(another:trailingSlash)-$(SENTINET_TOOL_STUFF:bold)
