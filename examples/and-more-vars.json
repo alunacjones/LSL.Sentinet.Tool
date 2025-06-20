@@ -1,0 +1,9 @@
+{
+    "$schema": "./schema.json",
+    "Variables": [
+        {
+            "Name": "Als",
+            "Value": "Other"
+        }
+    ]
+}

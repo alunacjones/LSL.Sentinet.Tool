@@ -14,7 +14,8 @@
             "args": [
                 "configure",
                 "-f",
-                "examples/test-data.yaml",
+                //"examples/test-data.yaml",
+                "examples/test-data.json",
                 "--variables",
                 "env=UAT;value=123;another=ads ewq",
                 // "--username",

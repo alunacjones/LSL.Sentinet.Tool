@@ -1,3 +1,4 @@
+using LSL.Evaluation.Core;
 using LSL.Evaluation.Jint;
 using LSL.VariableReplacer;
 using Newtonsoft.Json;
@@ -25,6 +26,6 @@ public class CommandProcessorFactory(
 
         var evaluator = jintEvaluatorFactory.Build(c => commandsCode.ForEach(c.AddCode));
 
-        return (command, value) => evaluator.Evaluate($"{command}({JsonConvert.SerializeObject(value)})").ToString();
+        return (command, value) => evaluator.Evaluate<string>($"{command}({JsonConvert.SerializeObject(value)})");
     }
 }
