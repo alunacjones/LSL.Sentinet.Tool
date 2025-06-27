@@ -1,8 +1,8 @@
 using DotNetEnv;
 using LSL.AbstractConsole.ServiceProvider;
 using LSL.Evaluation.Jint;
-using LSL.Sentinet.ApiClient.DependencyInjection;
 using LSL.Sentinet.Tool.Cli.Configuration;
+using LSL.Sentinet.Tool.Cli.Sentinet.Configuration;
 using LSL.VariableReplacer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,6 +53,7 @@ public static class HostBuilderFactory
                 .AddScoped<IConfigurationFileLoader, ConfigurationFileLoader>()
                 .AddScoped<ICommandProcessorFactory, CommandProcessorFactory>()
                 .AddScoped<IVariablesLoader, VariablesLoader>()
+                .AddScoped<IConfigurationApplicator, ConfigurationApplicator>()
                 .AddScoped(_ => new DeserializerBuilder().IgnoreUnmatchedProperties().Build())
                 .AddSentinetApiClient(
                     c => hostContext.Configuration.GetSection("Sentinet").Bind(c),
