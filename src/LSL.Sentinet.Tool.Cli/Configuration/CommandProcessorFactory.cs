@@ -11,12 +11,12 @@ public class CommandProcessorFactory(
     JintEvaluatorFactory jintEvaluatorFactory,
     ITextFileFetcherFactory textFileFetcherFactory) : ICommandProcessorFactory
 {
-    public async Task<CommandProcessingDelegate> BuildProcessor(string filePath)
+    public async Task<CommandProcessingDelegate> BuildProcessor(string filePath, IVariableReplacer variableReplacer)
     {
         using var commandReader = new StreamReader(filePath);
 
         var textFileFetcher = textFileFetcherFactory.Build(Path.GetDirectoryName(filePath)!);
-        var commands = deserializer.Deserialize<CommandsContainer>(commandReader);
+        var commands = deserializer.DeserializeWithVariableReplacement<CommandsContainer>(variableReplacer, commandReader);
         var commandsCode = new List<string>();
 
         foreach (var commandFile in commands.CommandFiles)

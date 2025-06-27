@@ -1,11 +1,16 @@
+using LSL.VariableReplacer;
 using YamlDotNet.Serialization;
 
 namespace LSL.Sentinet.Tool.Cli.Configuration;
 
 public class VariablesLoader(IDeserializer deserializer, ITextFileFetcherFactory textFileFetcherFactory) : IVariablesLoader
 {
-    public async Task<IDictionary<string, object>> LoadAsync(string configurationFilePath)
+    public async Task<IDictionary<string, object>> LoadAsync(string configurationFilePath, IVariableReplacer variableReplacer)
     {
+        var replacer = variableReplacer.CloneAndConfigure(c => c
+            .WhenVariableNotFound(variableName => $"$({variableName})")
+        );
+
         var textFileFetcher = textFileFetcherFactory.Build(Path.GetDirectoryName(configurationFilePath)!);
 
         return await Load(textFileFetcher, configurationFilePath);
@@ -14,7 +19,7 @@ public class VariablesLoader(IDeserializer deserializer, ITextFileFetcherFactory
         {
             using var reader = await textFileFetcher.FetchStreamReader(path);
 
-            var variableDefinitions = deserializer.Deserialize<VariablesContainer>(reader);
+            var variableDefinitions = deserializer.DeserializeWithVariableReplacement<VariablesContainer>(replacer, reader);
             var importedVariables = new Dictionary<string, object>();
 
             foreach (var import in variableDefinitions.Variables.Where(v => v.Import is not null))

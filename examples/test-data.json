@@ -1,10 +1,10 @@
 {
   "CommandFiles": [
-    "https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/commands.js"
+    "https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/$(file)"
   ],
   "Variables": [
     {
-      "Import": "https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/other-vars.yaml"
+      "Import": "https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/$(otherVars)"
     },
     {
       "Import": "./other-vars.yaml"

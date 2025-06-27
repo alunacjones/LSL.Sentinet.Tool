@@ -12,11 +12,13 @@ public class ConfigurationFileLoader(
     /// <inheritdoc/>
     public async Task<ConfigurationFile> LoadAsync(string filePath, IEnumerable<string> variables)
     {
-        var commandProcessor = await commandProcessorFactory.BuildProcessor(filePath);
-        var importedVariables = await variablesLoader.LoadAsync(filePath);
+        var replacerWithPassedVariables = variableReplacer
+            .CloneAndConfigure(c => c.AddPassedInVariables(variables));
 
-        var replacer = variableReplacer.CloneAndConfigure(c => c
-            .AddPassedInVariables(variables)
+        var commandProcessor = await commandProcessorFactory.BuildProcessor(filePath, replacerWithPassedVariables);
+        var importedVariables = await variablesLoader.LoadAsync(filePath, replacerWithPassedVariables);
+
+        var replacer = replacerWithPassedVariables.CloneAndConfigure(c => c
             .WithDefaultTransformer(commandProcessor: commandProcessor)
             .AddVariables(importedVariables)
             .ThrowIfVariableNotFound());
