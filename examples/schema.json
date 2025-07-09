@@ -12,9 +12,37 @@
         "Version": {
             "type": "integer",
             "format": "int32"
+        },
+        "Services": {
+            "$ref": "#/definitions/ServiceDefinitions"
         }
     },
     "definitions": {
+        "ServiceDefinitions": {
+            "type": "object",
+            "properties": {
+                "Physical": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceDefinition"
+                    }
+                },
+                "Virtual": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ServiceDefinition"
+                    }
+                }                
+            }
+        },
+        "ServiceDefinition": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string"
+                }
+            }
+        },
         "VarsOnly": {
             "type": "object",
             "properties": {

@@ -15,14 +15,20 @@
     {
       "Name": "name",
       "Value": "Buddy"
+    },
+    {
+      "Name": "ServiceName",
+      "Value": "My.Core.Sales"
     }
   ],
   "Name": "Als-$(env)-$(name)-$(another:trailingSlash)-$(SENTINET_TOOL_STUFF:bold)-$(Als)",
+  "Description": "$(ServiceName)",
   "Version": 12,
   "Services": {
     "Physical": [
       {
-        "Name": "Blah"
+        "$ref": "https://defs.com/basePhysicalService.yaml",
+        "Name": "$(ServiceName)"
       }
     ]
   }

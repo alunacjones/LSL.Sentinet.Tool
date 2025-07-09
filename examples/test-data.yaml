@@ -1,14 +1,28 @@
 # yaml-language-server: $schema=./schema.json
 CommandFiles:
-  - https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/commands.js
+  - "https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/$(file)"
 Variables:
-  - Import: https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/other-vars.yaml
+  - Import: "https://raw.githubusercontent.com/alunacjones/LSL.Sentinet.Tool/refs/heads/master/examples/$(otherVars)"
   - Import: ./other-vars.yaml
   - Import: ./and-more-vars.json
+  - Import: ./urls-$(env).yaml
   - Name: name
     Value: Buddy
-Name: Als-$(env)-$(name)-$(another:trailingSlash)-$(SENTINET_TOOL_STUFF:bold)-$(Als)
+  - Name: ServiceName
+    Value: My.Core.Sales
+  - Name: BaseSwaggerUrl
+    Value: "$(BaseUrl)Sales.Api/swagger/"
+  - Name: SwaggerFile
+    Value: swagger.json
+
+Name: "Als-$(env)-$(name)-$(another:trailingSlash)-$(SENTINET_TOOL_STUFF:bold)-$(Als)"
+Description: $(ServiceName)
 Version: 12
 Services:
   Physical:
-    - Name: Blah
+    - $ref: "https://defs.com/basePhysicalService.yaml"
+      Name: $(ServiceName)
+      Versions:
+      - Version: 1
+        SwaggerUrl: $(BaseSwaggerUrl)v1/$(SwaggerFile)
+      
